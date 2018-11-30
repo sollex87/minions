@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
 const header = document.getElementById('header');
 const root = document.getElementById('root');
+const repository = '/minions';
 
 class Header extends React.Component {
     constructor() {
@@ -62,8 +63,8 @@ function Main() {
         <Router>
             <React.Fragment>
                 <ul>
-                    <li><Link to="/hangman">Hangman</Link></li>
-                    <li><Link to="/barley-break">Barley Break</Link></li>
+                    <li><Link to={`${repository}/hangman`}>Hangman</Link></li>
+                    <li><Link to={`${repository}/barley-break`}>Barley Break</Link></li>
                 </ul>
             </React.Fragment>
         </Router>
@@ -80,7 +81,7 @@ class HangmanStart extends React.Component {
             <Router>
                 <React.Fragment>
                     <ul>
-                        <li><Link to="/">Main</Link></li>
+                        <li><Link to={`${repository}/`}>Main</Link></li>
                     </ul>
                     <div className="hangman-main">
                         <canvas id="hangman-canvas" />
@@ -146,7 +147,7 @@ class BarleyBreakStart extends React.Component {
             <Router>
                 <React.Fragment>
                     <ul>
-                        <li><Link to="/">Main</Link></li>
+                        <li><Link to={`${repository}/`}>Main</Link></li>
                     </ul>
                     <canvas id="barley-canvas" />
                 </React.Fragment>
@@ -196,7 +197,7 @@ function NotFound() {
         <Router>
             <React.Fragment>
                 <ul>
-                    <li><Link to="/">Main</Link></li>
+                    <li><Link to={`${repository}/`}>Main</Link></li>
                 </ul>
                 <p>Sorry, we don't have a game like this yet :)</p>
             </React.Fragment>
@@ -209,9 +210,9 @@ function GameRouter() {
         <Router>
             <React.Fragment>
                 <Switch>
-                    <Route path="/" exact component={Main} />
-                    <Route path="/hangman" exact component={HangmanStart} />
-                    <Route path="/barley-break" exact component={BarleyBreakStart} />
+                    <Route path={`${repository}/`} exact component={Main} />
+                    <Route path={`${repository}/hangman`} exact component={HangmanStart} />
+                    <Route path={`${repository}/barley-break`} exact component={BarleyBreakStart} />
                     <Route component={NotFound} />
                 </Switch>
             </React.Fragment>
