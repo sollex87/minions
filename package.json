@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "react-router-dom": "^4.3.1"
+  },
+  "name": "minions",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "cssnano": "^4.1.7",
+    "gh-pages": "^2.0.1",
+    "parcel": "^1.10.3"
+  },
+  "contributors": [
+    "",
+    "",
+    ""
+  ],
+  "license": "MIT",
+  "description": "ReactJS graduation project",
+  "scripts": {
+    "start": "parcel ./src/index.html",
+    "build": "parcel build ./src/index.html --public-url /minions",
+    "deploy": "gh-pages -d dist"
+  }
+}
