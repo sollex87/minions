@@ -38,17 +38,11 @@ export default class Hangman {
         this.context = this.canvas.getContext('2d');
         this.dudes = new Image();
         this.dudes.src = require('../assets/hangman.jpg');
-        this.banana = new Image();
-        this.banana.src = require('../assets/banana.jpg');
         this.dudes.onload = () => {
-            this.context.drawImage(this.banana, 0, 0, this.canvas.width, this.canvas.height);
             if (this.triesCount > 0) {
                 this.context.drawImage(this.dudes, 0, ((7 - this.triesCount) * 20), this.canvas.width, this.canvas.height);
             } else {
                 this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            }
-            if (this.win) {
-                this.context.drawImage(this.banana, 0, 0, this.canvas.width, this.canvas.height);
             }
         };
     }

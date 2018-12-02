@@ -9,7 +9,6 @@ export default function BarleyBreak(context, cellSize) {
     let clicks = 0;
 
     function playClick() {
-        console.log('click');
         const clickSound = new Audio();
         clickSound.src = require('../assets/click.mp3');
         clickSound.autoplay = true;

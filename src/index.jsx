@@ -8,6 +8,14 @@ const header = document.getElementById('header');
 const root = document.getElementById('root');
 const repository = '/minions';
 
+// function welcomeAudio(){
+//     const welcome = new Audio();
+//     welcome.src = require('../assets/welcome.mp3');
+//     welcome.autoplay = true;
+// }
+
+// window.onload = welcomeAudio();
+
 class Header extends React.Component {
     constructor() {
         super();
