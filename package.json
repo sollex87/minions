@@ -21,7 +21,7 @@
   "description": "ReactJS graduation project",
   "scripts": {
     "start": "parcel ./src/index.html",
-    "build": "parcel build ./src/index.html --public-url /minions",
+    "build": "parcel build ./src/index.html --public-url /minions && workbox generateSW workbox-config.js && cp dist/index.html dist/404.html",
     "deploy": "gh-pages -d dist"
   }
 }
