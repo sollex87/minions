@@ -250,7 +250,15 @@ window.addEventListener('load', () => {
         button: 'Play!'
     })
         .then(() => greetingSound.play())
-        .then(() => window.addEventListener('click', () => greetingSound.pause()))
+        .then(() => window.addEventListener('click', () => {
+            const playback = setInterval(() => {
+                console.log(greetingSound.volume);
+                greetingSound.volume -= 0.1;
+                if (greetingSound.volume === 0) {
+                    clearInterval(playback);
+                }
+            }, 50);
+        }))
 });
 
 ReactDOM.render(<Header />, header);
