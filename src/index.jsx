@@ -187,6 +187,10 @@ class HangmanStart extends React.Component {
 class BarleyBreakStart extends React.Component {
     constructor() {
         super();
+
+        this.state = {
+            clicks: 0,
+        }
     }
 
     render() {
@@ -194,6 +198,7 @@ class BarleyBreakStart extends React.Component {
             <React.Fragment>
                 <ul>
                     <li><Link to={`${repository}/`}>Main</Link></li>
+                    <li className="li-barley-clicks">Clicks: <span id="span-barley-clicks">0</span></li>
                 </ul>
                 <canvas id="barley-canvas" />
             </React.Fragment>
@@ -201,8 +206,10 @@ class BarleyBreakStart extends React.Component {
     }
 
     componentDidMount() {
+
         this.canvas = document.getElementById("barley-canvas");
         this.context = this.canvas.getContext("2d");
+        this.clicksDisplay = document.getElementById("span-barley-clicks");
         this.canvas.width = 320;
         this.canvas.height = 320;
         this.cellSize = this.canvas.width / 4;
@@ -215,12 +222,14 @@ class BarleyBreakStart extends React.Component {
             let x = (e.pageX - this.canvas.offsetLeft) / this.cellSize | 0; // клик события
             let y = (e.pageY - this.canvas.offsetTop) / this.cellSize | 0;
             this.event(x, y);
+            this.clicksDisplay.innerText = this.game.getClicks();
         };
 
         this.canvas.ontouchend = (e) => {
             let x = (e.touches[0].pageX - this.canvas.offsetLeft) / this.cellSize | 0; //тач события
             let y = (e.touches[0].pageY - this.canvas.offsetTop) / this.cellSize | 0;
             this.event(x, y);
+            this.clicksDisplay.innerText = this.game.getClicks();
         };
 
         this.event = (x, y) => { // собираем
@@ -244,21 +253,23 @@ class BarleyBreakStart extends React.Component {
     }
 }
 
+const volumeReduce = () => {
+    const playback = setInterval(() => {
+        greetingSound.volume -= 0.1;
+        if (greetingSound.volume < 0.2) {
+            greetingSound.pause();
+            clearInterval(playback);
+        }
+    }, 50)
+}
+
 window.addEventListener('load', () => {
     swal(greetImg, {
         className: 'welcome',
         button: 'Play!'
     })
         .then(() => greetingSound.play())
-        .then(() => window.addEventListener('click', () => {
-            const playback = setInterval(() => {
-                console.log(greetingSound.volume);
-                greetingSound.volume -= 0.1;
-                if (greetingSound.volume === 0) {
-                    clearInterval(playback);
-                }
-            }, 50);
-        }))
+        .then(() => setTimeout(volumeReduce, 5500))
 });
 
 ReactDOM.render(<Header />, header);

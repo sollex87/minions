@@ -34,7 +34,7 @@
 
 ul{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 #root{
@@ -78,7 +78,11 @@ canvas{
 }
 
 .swal-modal.welcome{
-    background-color: rgba(255, 226, 5, 0.8);
+    background-color: rgb(255, 229, 32);
+}
+
+.li-barley-clicks{
+    list-style-type: none;
 }
 
 .swal-button{
