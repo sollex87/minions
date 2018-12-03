@@ -62,7 +62,6 @@ export default class Hangman {
     setWord() {
         this.category = this.getRandomWord(Object.keys(this.words));
         this.word = this.getRandomWord(this.words[this.category]);
-        console.log(this.word);
     }
 
     maskWord() {
@@ -93,15 +92,14 @@ export default class Hangman {
     checkEndGame() {
         if (this.hiddenLettersAmount === 0 && this.triesCount > 0) {
             this.win = true;
-            console.log('win', this.win);
         }
         if (this.hiddenLettersAmount > 0 && this.triesCount === 0) {
             this.loss = true;
-            console.log('loss ',this.loss);
         }
     }
 
     compareChar(data) {
+        data = data.toLowerCase();
         let guessed = false;
         let used = false;
         for (let i = 0; i < this.usedLetters.length; i += 1) {

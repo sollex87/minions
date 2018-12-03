@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Gloria+Hallelujah');
 *{
     font-family: 'Gloria Hallelujah', cursive;
-    font-size: 20px;
+    font-size: 18px;
     color: rgb(2, 58, 95);
 }
 
@@ -22,7 +22,7 @@
 }
 
 .header *{
-    font-size: 30px;
+    font-size: 20px;
     font-weight: bold;
 }
 
@@ -71,4 +71,23 @@ canvas{
 .hangman-main{
     display: flex;
     justify-content: space-around;
+}
+
+.swal-overlay{
+    background-color: rgba(255, 226, 5, 0.3);
+}
+
+.swal-modal.welcome{
+    background-color: rgba(255, 226, 5, 0.8);
+}
+
+.swal-button{
+    background: rgba(112, 165, 200);
+    font-family: 'Gloria Hallelujah', cursive;
+    letter-spacing: 1.5px;
+}
+
+.swal-title{
+    color: rgba(112, 165, 200);
+    font-family: 'Gloria Hallelujah', cursive;
 }

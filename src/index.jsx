@@ -3,18 +3,27 @@ import ReactDOM from 'react-dom';
 import Hangman from './hangman.js'
 import BarleyBreak from './barley-break.js'
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import swal from 'sweetalert';
 
 const header = document.getElementById('header');
 const root = document.getElementById('root');
 const repository = '/minions';
+const winImg = new Image(300);
+const lossImg = new Image(300);
+const greetImg = new Image(300);
+const onLoadSound = new Audio();
+const onClickSound = new Audio();
+const onLossSound = new Audio();
+const onWinSound = new Audio();
 
-// function welcomeAudio(){
-//     const welcome = new Audio();
-//     welcome.src = require('../assets/welcome.mp3');
-//     welcome.autoplay = true;
-// }
 
-// window.onload = welcomeAudio();
+winImg.src = require('../assets/win_case.jpg');
+lossImg.src = require('../assets/loss_case.jpg');
+greetImg.src = require('../assets/start.jpg');
+onLoadSound.src = require('../assets/welcome.mp3');
+onClickSound.src = require('../assets/click.mp3');
+onLossSound.src = require('../assets/loss.mp3');
+onWinSound.src = require('../assets/win.mp3');
 
 class Header extends React.Component {
     constructor() {
@@ -68,12 +77,36 @@ class Header extends React.Component {
 
 function Main() {
     return (
+        <React.Fragment>
+            <ul>
+                <li><Link to={`${repository}/hangman`}>Hangman</Link></li>
+                <li><Link to={`${repository}/barley-break`}>Barley Break</Link></li>
+            </ul>
+        </React.Fragment>
+    )
+}
+
+function NotFound() {
+    return (
+        <React.Fragment>
+            <ul>
+                <li><Link to={`${repository}/`}>Main</Link></li>
+            </ul>
+            <p>Sorry, we don't have a game like this yet :)</p>
+        </React.Fragment>
+    )
+}
+
+function GameRouter() {
+    return (
         <Router>
             <React.Fragment>
-                <ul>
-                    <li><Link to={`${repository}/hangman`}>Hangman</Link></li>
-                    <li><Link to={`${repository}/barley-break`}>Barley Break</Link></li>
-                </ul>
+                <Switch>
+                    <Route path={`${repository}/`} exact component={Main} />
+                    <Route path={`${repository}/hangman`} exact component={HangmanStart} />
+                    <Route path={`${repository}/barley-break`} exact component={BarleyBreakStart} />
+                    <Route component={NotFound} />
+                </Switch>
             </React.Fragment>
         </Router>
     )
@@ -86,21 +119,19 @@ class HangmanStart extends React.Component {
 
     render() {
         return (
-            <Router>
-                <React.Fragment>
-                    <ul>
-                        <li><Link to={`${repository}/`}>Main</Link></li>
-                    </ul>
-                    <div className="hangman-main">
-                        <canvas id="hangman-canvas" />
-                        <div className="hangman-interact">
-                            <div id="display" />
-                            <input type="text" id='letter' placeholder="Type letter here..." />
-                            <button id="reset">New Game</button>
-                        </div>
+            <React.Fragment>
+                <ul>
+                    <li><Link to={`${repository}/`}>Main</Link></li>
+                </ul>
+                <div className="hangman-main">
+                    <canvas id="hangman-canvas" />
+                    <div className="hangman-interact">
+                        <div id="display" />
+                        <input type="text" id='letter' placeholder="Type letter here..." />
+                        <button id="reset">New Game</button>
                     </div>
-                </React.Fragment>
-            </Router>
+                </div>
+            </React.Fragment>
         )
     }
 
@@ -112,34 +143,42 @@ class HangmanStart extends React.Component {
         this.game.initialize();
         this.game.draw();
         this.reset.addEventListener('click', () => {
+            onClickSound.play();
             this.input.disabled = false;
             this.game = new Hangman();
             this.game.initialize();
             this.game.draw();
         })
         this.input.addEventListener('input', () => {
+            onClickSound.play();
             this.game.compareChar(this.input.value);
             this.game.draw();
             this.input.value = '';
             if (this.game.loss) {
-                if (confirm(`Loss! The word was ${this.game.word}!
-                Another try?`)) {
-                    this.game = new Hangman();
-                    this.game.initialize();
-                    this.game.draw();
-                } else {
-                    this.input.disabled = true;
-                };
+                onLossSound.play();
+                swal(lossImg, {
+                    title: "LOSS!",
+                    button: 'Try again!'
+                })
+                    .then(() => onLossSound.pause())
+                    .then(() => {
+                        this.game = new Hangman();
+                        this.game.initialize();
+                        this.game.draw();
+                    })
             }
             else if (this.game.win) {
-                if (confirm(`Win!
-                Another try?`)) {
-                    this.game = new Hangman();
-                    this.game.initialize();
-                    this.game.draw();
-                } else {
-                    this.input.disabled = true;
-                };
+                onWinSound.play();
+                swal(winImg, {
+                    title: "WIN!",
+                    button: 'Hooray!'
+                })
+                    .then(() => onWinSound.pause())
+                    .then(() => {
+                        this.game = new Hangman();
+                        this.game.initialize();
+                        this.game.draw();
+                    })
             }
         })
     }
@@ -152,14 +191,12 @@ class BarleyBreakStart extends React.Component {
 
     render() {
         return (
-            <Router>
-                <React.Fragment>
-                    <ul>
-                        <li><Link to={`${repository}/`}>Main</Link></li>
-                    </ul>
-                    <canvas id="barley-canvas" />
-                </React.Fragment>
-            </Router>
+            <React.Fragment>
+                <ul>
+                    <li><Link to={`${repository}/`}>Main</Link></li>
+                </ul>
+                <canvas id="barley-canvas" />
+            </React.Fragment>
         )
     }
 
@@ -191,42 +228,30 @@ class BarleyBreakStart extends React.Component {
             this.context.fillRect(0, 0, this.canvas.width, this.canvas.height); //отрисовка пустой клетки
             this.game.draw(); //отрисовка заполненых клеток и текста
             if (this.game.victory()) { //проверка на правильность сборки
-                alert("Поздравляем! Вы закончили игру за " + this.game.getClicks() + " ходов!");
-                this.game.mix(300);
-                this.context.fillRect(0, 0, this.canvas.width, this.canvas.height); //отрисовка пустой клетки
-                this.game.draw(this.context, this.cellSize);
+                onWinSound.play();
+                swal(winImg, {
+                    title: "WIN!",
+                    button: 'Hooray!'
+                })
+                    .then(() => onWinSound.pause())
+                    .then(() => {
+                        this.game.mix(300);
+                        this.context.fillRect(0, 0, this.canvas.width, this.canvas.height); //отрисовка пустой клетки
+                        this.game.draw(this.context, this.cellSize);
+                    })
             }
         }
     }
 }
 
-function NotFound() {
-    return (
-        <Router>
-            <React.Fragment>
-                <ul>
-                    <li><Link to={`${repository}/`}>Main</Link></li>
-                </ul>
-                <p>Sorry, we don't have a game like this yet :)</p>
-            </React.Fragment>
-        </Router>
-    )
-}
-
-function GameRouter() {
-    return (
-        <Router>
-            <React.Fragment>
-                <Switch>
-                    <Route path={`${repository}/`} exact component={Main} />
-                    <Route path={`${repository}/hangman`} exact component={HangmanStart} />
-                    <Route path={`${repository}/barley-break`} exact component={BarleyBreakStart} />
-                    <Route component={NotFound} />
-                </Switch>
-            </React.Fragment>
-        </Router>
-    )
-}
+window.addEventListener('load', () => {
+    onLoadSound.play();
+    swal(greetImg, {
+        className: 'welcome',
+        button: 'Play!'
+    })
+        .then(() => onLoadSound.pause());
+});
 
 ReactDOM.render(<Header />, header);
 

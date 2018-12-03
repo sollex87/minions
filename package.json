@@ -2,7 +2,8 @@
   "dependencies": {
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
-    "react-router-dom": "^4.3.1"
+    "react-router-dom": "^4.3.1",
+    "sweetalert": "^2.1.2"
   },
   "name": "minions",
   "version": "1.0.0",
@@ -21,7 +22,7 @@
   "description": "ReactJS graduation project",
   "scripts": {
     "start": "parcel ./src/index.html",
-    "build": "parcel build ./src/index.html --public-url /minions && workbox generateSW workbox-config.js && cp dist/index.html dist/404.html",
+    "build": "parcel build ./src/index.html --public-url /minions && cp dist/index.html dist/404.html",
     "deploy": "gh-pages -d dist"
   }
 }
