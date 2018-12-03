@@ -11,7 +11,7 @@ const repository = '/minions';
 const winImg = new Image(300);
 const lossImg = new Image(300);
 const greetImg = new Image(300);
-const onLoadSound = new Audio();
+const greetingSound = new Audio();
 const onClickSound = new Audio();
 const onLossSound = new Audio();
 const onWinSound = new Audio();
@@ -20,7 +20,7 @@ const onWinSound = new Audio();
 winImg.src = require('../assets/win_case.jpg');
 lossImg.src = require('../assets/loss_case.jpg');
 greetImg.src = require('../assets/start.jpg');
-onLoadSound.src = require('../assets/welcome.mp3');
+greetingSound.src = require('../assets/welcome.mp3');
 onClickSound.src = require('../assets/click.mp3');
 onLossSound.src = require('../assets/loss.mp3');
 onWinSound.src = require('../assets/win.mp3');
@@ -245,12 +245,12 @@ class BarleyBreakStart extends React.Component {
 }
 
 window.addEventListener('load', () => {
-    onLoadSound.play();
     swal(greetImg, {
         className: 'welcome',
         button: 'Play!'
     })
-        .then(() => onLoadSound.pause());
+        .then(() => greetingSound.play())
+        .then(() => window.addEventListener('click', () => greetingSound.pause()))
 });
 
 ReactDOM.render(<Header />, header);
