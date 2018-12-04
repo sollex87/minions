@@ -9,15 +9,19 @@ import swal from 'sweetalert';
 const header = document.getElementById('header');
 const root = document.getElementById('root');
 const repository = '/minions';
+
 const winImg = new Image(300);
 const lossImg = new Image(300);
 const greetImg = new Image(300);
+
 const greetingSound = new Audio();
 const onClickSound = new Audio();
 const onLossSound = new Audio();
 const onWinSound = new Audio();
 
-
+const iconBarleyPath = require('../assets/icon-barley.png');
+const iconHangmanPath = require('../assets/icon-hangman.png');
+const iconMemoryPath = require('../assets/icon-memory.png');
 winImg.src = require('../assets/win_case.jpg');
 lossImg.src = require('../assets/loss_case.jpg');
 greetImg.src = require('../assets/start.jpg');
@@ -79,11 +83,20 @@ class Header extends React.Component {
 function Main() {
     return (
         <React.Fragment>
-            <ul>
-                <li><Link to={`${repository}/hangman`}>Hangman</Link></li>
-                <li><Link to={`${repository}/barley-break`}>Barley Break</Link></li>
-                <li><Link to={`${repository}/memory`}>Find A Match</Link></li>
-            </ul>
+            <div className="main-menu">
+                <Link to={`${repository}/barley-break`} className="game-link">
+                    Barley Break
+                    <img src={iconBarleyPath} alt="" width="130" height="110" />
+                </Link>
+                <Link to={`${repository}/hangman`} className="game-link">
+                    Hangman
+                    <img src={iconHangmanPath} alt="" width="130" height="110" />
+                </Link>
+                <Link to={`${repository}/memory`} className="game-link">
+                    Find Match
+                    <img src={iconMemoryPath} alt="" width="130" height="110" />
+                </Link>
+            </div>
         </React.Fragment>
     )
 }
@@ -92,7 +105,7 @@ function NotFound() {
     return (
         <React.Fragment>
             <ul>
-                <li><Link to={`${repository}/`}>Main</Link></li>
+                <li><Link to={`${repository}/`}>Games</Link></li>
             </ul>
             <p>Sorry, we don't have a game like this yet :)</p>
         </React.Fragment>
@@ -123,10 +136,10 @@ class HangmanLauncher extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <ul>
-                    <li><Link to={`${repository}/`}>Back</Link></li>
-                    <li className="new-game">New Game</li>
-                </ul>
+                <div className="app-menu">
+                    <Link to={`${repository}/`}>Back</Link>
+                    <div className="new-game">New Game</div>
+                </div>
                 <div className="hangman-main">
                     <canvas id="hangman-canvas" />
                     <div className="hangman-interact">
@@ -200,11 +213,11 @@ class BarleyLauncher extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <ul>
-                    <li><Link to={`${repository}/`}>Back</Link></li>
-                    <li className="new-game">New Game</li>
-                    <li className="clicks">Clicks: <span id="span-clicks">0</span></li>
-                </ul>
+                <div className="app-menu">
+                    <Link to={`${repository}/`}>Back</Link>
+                    <div className="new-game">New Game</div>
+                    <div className="clicks">Clicks: <span id="span-clicks">0</span></div>
+                </div>
                 <canvas id="barley-canvas" />
             </React.Fragment>
         )
@@ -276,11 +289,11 @@ class MemoryLauncher extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <ul>
-                    <li><Link to={`${repository}/`}>Back</Link></li>
-                    <li className="new-game">New Game</li>
-                    <li className="clicks">Tries: <span id="span-clicks">0</span></li>
-                </ul>
+                <div className="app-menu">
+                    <Link to={`${repository}/`}>Back</Link>
+                    <div className="new-game">New Game</div>
+                    <div className="clicks">Tries: <span id="span-clicks">0</span></div>
+                </div>
                 <div id='memory' />
             </React.Fragment>
         )

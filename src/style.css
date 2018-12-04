@@ -23,8 +23,8 @@
     box-shadow: 0 0 10px rgb(3, 106, 119);
     border-radius: 7px;
     display: block;
-    width: 320px;
-    height: 440px;
+    width: 232px;
+    height: 320px;
     margin: auto;
     display: flex;
     flex-wrap: wrap;
@@ -52,9 +52,15 @@
     margin: 0 auto;
 }
 
-ul{
+.main-menu{
     display: flex;
     justify-content: space-between;
+}
+
+.app-menu{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 40px;
 }
 
 #root{
@@ -143,3 +149,38 @@ canvas{
 .flip {
     transform: rotateY(180deg);
   }
+
+.game-link{
+    box-shadow: 0 0 5px #fff;
+    transition: 0.3s ease-in-out;
+}
+
+.game-link:hover{
+    transform: scale(1.1);
+}
+
+.game-link img{
+    display: block;
+}
+
+  
+@media screen and (max-width: 450px){
+    .main-menu{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    
+}
+
+@media screen and (min-width: 359px){
+    #memory{
+        width: 320px;
+        height: 440px;
+    }
+
+    .game-link img{
+        width: 180px;
+        height: 150px;
+    }
+}
