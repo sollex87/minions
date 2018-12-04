@@ -124,7 +124,7 @@ class HangmanLauncher extends React.Component {
         return (
             <React.Fragment>
                 <ul>
-                    <li><Link to={`${repository}/`}>Main</Link></li>
+                    <li><Link to={`${repository}/`}>Back</Link></li>
                     <li className="new-game">New Game</li>
                 </ul>
                 <div className="hangman-main">
@@ -201,7 +201,7 @@ class BarleyLauncher extends React.Component {
         return (
             <React.Fragment>
                 <ul>
-                    <li><Link to={`${repository}/`}>Main</Link></li>
+                    <li><Link to={`${repository}/`}>Back</Link></li>
                     <li className="new-game">New Game</li>
                     <li className="clicks">Clicks: <span id="span-clicks">0</span></li>
                 </ul>
@@ -277,7 +277,7 @@ class MemoryLauncher extends React.Component {
         return (
             <React.Fragment>
                 <ul>
-                    <li><Link to={`${repository}/`}>Main</Link></li>
+                    <li><Link to={`${repository}/`}>Back</Link></li>
                     <li className="new-game">New Game</li>
                     <li className="clicks">Tries: <span id="span-clicks">0</span></li>
                 </ul>
@@ -285,33 +285,40 @@ class MemoryLauncher extends React.Component {
             </React.Fragment>
         )
     }
-    componentDidMount() {
-        this.newGame = document.getElementsByClassName('new-game')[0];
+
+    clearField() {
         this.display = document.getElementById('memory');
-        this.clicksDisplay = document.getElementById("span-clicks");
+        while (this.display.firstChild) {
+            this.display.removeChild(this.display.firstChild);
+        };
+    }
+
+    init() {
+        this.clearField();
         this.game = new Memory();
         this.clicksDisplay.innerText = this.game.getClicks();
         this.game.createCards();
-        if (this.game.win()) {
-            onWinSound.play();
-            swal(winImg, {
-                title: "WIN!",
-                button: 'Hooray!'
-            })
-                .then(() => onWinSound.pause())
-                .then(() => {
-                    this.game = new Memory();
-                    this.clicksDisplay.innerText = this.game.getClicks();
-                    this.game.createCards();
-                })
-        }
+    }
+
+    componentDidMount() {
+        this.newGame = document.getElementsByClassName('new-game')[0];
+        this.clicksDisplay = document.getElementById("span-clicks");
+        this.init();
         this.newGame.onclick = () => {
-            while (this.display.firstChild) {
-                this.display.removeChild(this.display.firstChild);
-            };
-            this.game = new Memory();
-            this.clicksDisplay.innerText = this.game.getClicks();
-            this.game.createCards();
+            this.init();
+        }
+        this.display.onclick = () => {
+            if (this.game.win()) {
+                onWinSound.play();
+                swal(winImg, {
+                    title: "WIN!",
+                    button: 'Hooray!'
+                })
+                    .then(() => onWinSound.pause())
+                    .then(() => {
+                        this.init();
+                    })
+            }
         }
     }
 }
