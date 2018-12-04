@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Hangman from './hangman.js'
-import BarleyBreak from './barley-break.js'
+import Hangman from './hangman.js';
+import BarleyBreak from './barley-break.js';
+import Memory from './memory.js';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import swal from 'sweetalert';
 
@@ -81,6 +82,7 @@ function Main() {
             <ul>
                 <li><Link to={`${repository}/hangman`}>Hangman</Link></li>
                 <li><Link to={`${repository}/barley-break`}>Barley Break</Link></li>
+                <li><Link to={`${repository}/memory`}>Find A Match</Link></li>
             </ul>
         </React.Fragment>
     )
@@ -103,8 +105,9 @@ function GameRouter() {
             <React.Fragment>
                 <Switch>
                     <Route path={`${repository}/`} exact component={Main} />
-                    <Route path={`${repository}/hangman`} exact component={HangmanStart} />
-                    <Route path={`${repository}/barley-break`} exact component={BarleyBreakStart} />
+                    <Route path={`${repository}/hangman`} exact component={HangmanLauncher} />
+                    <Route path={`${repository}/barley-break`} exact component={BarleyLauncher} />
+                    <Route path={`${repository}/memory`} exact component={MemoryLauncher} />
                     <Route component={NotFound} />
                 </Switch>
             </React.Fragment>
@@ -112,7 +115,7 @@ function GameRouter() {
     )
 }
 
-class HangmanStart extends React.Component {
+class HangmanLauncher extends React.Component {
     constructor() {
         super();
     }
@@ -122,13 +125,13 @@ class HangmanStart extends React.Component {
             <React.Fragment>
                 <ul>
                     <li><Link to={`${repository}/`}>Main</Link></li>
+                    <li className="new-game">New Game</li>
                 </ul>
                 <div className="hangman-main">
                     <canvas id="hangman-canvas" />
                     <div className="hangman-interact">
                         <div id="display" />
                         <input type="text" id='letter' placeholder="Type letter here..." />
-                        <button id="reset">New Game</button>
                     </div>
                 </div>
             </React.Fragment>
@@ -136,19 +139,13 @@ class HangmanStart extends React.Component {
     }
 
     componentDidMount() {
+        this.newGame = document.getElementsByClassName('new-game')[0];
         this.input = document.getElementById('letter');
         this.input.disabled = false;
         this.reset = document.getElementById('reset');
         this.game = new Hangman();
         this.game.initialize();
         this.game.draw();
-        this.reset.addEventListener('click', () => {
-            onClickSound.play();
-            this.input.disabled = false;
-            this.game = new Hangman();
-            this.game.initialize();
-            this.game.draw();
-        })
         this.input.addEventListener('input', () => {
             onClickSound.play();
             this.game.compareChar(this.input.value);
@@ -181,10 +178,17 @@ class HangmanStart extends React.Component {
                     })
             }
         })
+        this.newGame.onclick = () => {
+            onClickSound.play();
+            this.input.disabled = false;
+            this.game = new Hangman();
+            this.game.initialize();
+            this.game.draw();
+        }
     }
 }
 
-class BarleyBreakStart extends React.Component {
+class BarleyLauncher extends React.Component {
     constructor() {
         super();
 
@@ -198,7 +202,8 @@ class BarleyBreakStart extends React.Component {
             <React.Fragment>
                 <ul>
                     <li><Link to={`${repository}/`}>Main</Link></li>
-                    <li className="li-barley-clicks">Clicks: <span id="span-barley-clicks">0</span></li>
+                    <li className="new-game">New Game</li>
+                    <li className="clicks">Clicks: <span id="span-clicks">0</span></li>
                 </ul>
                 <canvas id="barley-canvas" />
             </React.Fragment>
@@ -206,10 +211,10 @@ class BarleyBreakStart extends React.Component {
     }
 
     componentDidMount() {
-
+        this.newGame = document.getElementsByClassName('new-game')[0];
         this.canvas = document.getElementById("barley-canvas");
         this.context = this.canvas.getContext("2d");
-        this.clicksDisplay = document.getElementById("span-barley-clicks");
+        this.clicksDisplay = document.getElementById("span-clicks");
         this.canvas.width = 320;
         this.canvas.height = 320;
         this.cellSize = this.canvas.width / 4;
@@ -245,10 +250,68 @@ class BarleyBreakStart extends React.Component {
                     .then(() => onWinSound.pause())
                     .then(() => {
                         this.game.mix(300);
-                        this.context.fillRect(0, 0, this.canvas.width, this.canvas.height); //отрисовка пустой клетки
+                        this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
                         this.game.draw(this.context, this.cellSize);
                     })
             }
+        }
+        this.newGame.onclick = () => {
+            this.game = new BarleyBreak(this.context, this.cellSize);
+            this.game.mix(300);
+            this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+            this.game.draw();
+        }
+    }
+}
+
+class MemoryLauncher extends React.Component {
+    constructor() {
+        super();
+
+        this.state = {
+            clicks: 0,
+        }
+    }
+
+    render() {
+        return (
+            <React.Fragment>
+                <ul>
+                    <li><Link to={`${repository}/`}>Main</Link></li>
+                    <li className="new-game">New Game</li>
+                    <li className="clicks">Tries: <span id="span-clicks">0</span></li>
+                </ul>
+                <div id='memory' />
+            </React.Fragment>
+        )
+    }
+    componentDidMount() {
+        this.newGame = document.getElementsByClassName('new-game')[0];
+        this.display = document.getElementById('memory');
+        this.clicksDisplay = document.getElementById("span-clicks");
+        this.game = new Memory();
+        this.clicksDisplay.innerText = this.game.getClicks();
+        this.game.createCards();
+        if (this.game.win()) {
+            onWinSound.play();
+            swal(winImg, {
+                title: "WIN!",
+                button: 'Hooray!'
+            })
+                .then(() => onWinSound.pause())
+                .then(() => {
+                    this.game = new Memory();
+                    this.clicksDisplay.innerText = this.game.getClicks();
+                    this.game.createCards();
+                })
+        }
+        this.newGame.onclick = () => {
+            while (this.display.firstChild) {
+                this.display.removeChild(this.display.firstChild);
+            };
+            this.game = new Memory();
+            this.clicksDisplay.innerText = this.game.getClicks();
+            this.game.createCards();
         }
     }
 }
