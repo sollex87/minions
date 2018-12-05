@@ -1,8 +1,9 @@
 {
-  "name": "Once In A Minion",
+  "name": "One In A Minion",
   "short_name": "Minions",
-  "start_url": "minions",
+  "start_url": "/minions/",
   "display": "standalone",
+  "theme_color": "rgb(255, 229, 32)",
   "lang": "en-US",
   "background_color": "#fff",
   "description": "Collection of Minions' inspired games",

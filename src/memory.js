@@ -45,6 +45,7 @@ export default class Memory {
 
   createCards() {
     this.getUrls();
+    console.log(this.newSuits);
     console.log(this.frontURL);
     this.newSuits.map((newSuits, i) => {
       console.log(this.frontURL);

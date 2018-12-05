@@ -9,6 +9,9 @@ import swal from 'sweetalert';
 const header = document.getElementById('header');
 const root = document.getElementById('root');
 const repository = '/minions';
+const barleyLink = '/barley-break';
+const hangmanLink = '/hangman';
+const memoryLink = '/memory';
 
 const winImg = new Image(300);
 const lossImg = new Image(300);
@@ -80,64 +83,20 @@ class Header extends React.Component {
     }
 }
 
-function Main() {
-    return (
-        <React.Fragment>
-            <div className="main-menu">
-                <Link to={`${repository}/barley-break`} className="game-link">
-                    Barley Break
-                    <img src={iconBarleyPath} alt="" width="130" height="110" />
-                </Link>
-                <Link to={`${repository}/hangman`} className="game-link">
-                    Hangman
-                    <img src={iconHangmanPath} alt="" width="130" height="110" />
-                </Link>
-                <Link to={`${repository}/memory`} className="game-link">
-                    Find Match
-                    <img src={iconMemoryPath} alt="" width="130" height="110" />
-                </Link>
-            </div>
-        </React.Fragment>
-    )
-}
-
-function NotFound() {
-    return (
-        <React.Fragment>
-            <ul>
-                <li><Link to={`${repository}/`}>Games</Link></li>
-            </ul>
-            <p>Sorry, we don't have a game like this yet :)</p>
-        </React.Fragment>
-    )
-}
-
-function GameRouter() {
-    return (
-        <Router>
-            <React.Fragment>
-                <Switch>
-                    <Route path={`${repository}/`} exact component={Main} />
-                    <Route path={`${repository}/hangman`} exact component={HangmanLauncher} />
-                    <Route path={`${repository}/barley-break`} exact component={BarleyLauncher} />
-                    <Route path={`${repository}/memory`} exact component={MemoryLauncher} />
-                    <Route component={NotFound} />
-                </Switch>
-            </React.Fragment>
-        </Router>
-    )
-}
-
 class HangmanLauncher extends React.Component {
     constructor() {
         super();
+
+        this.state = {
+            path: ''
+        }
     }
 
     render() {
         return (
             <React.Fragment>
                 <div className="app-menu">
-                    <Link to={`${repository}/`}>Back</Link>
+                    <Link to={`${repository}/`}><span id="back">Back</span></Link>
                     <div className="new-game">New Game</div>
                 </div>
                 <div className="hangman-main">
@@ -152,6 +111,7 @@ class HangmanLauncher extends React.Component {
     }
 
     componentDidMount() {
+        this.backButton = document.getElementById('back');
         this.newGame = document.getElementsByClassName('new-game')[0];
         this.input = document.getElementById('letter');
         this.input.disabled = false;
@@ -192,11 +152,15 @@ class HangmanLauncher extends React.Component {
             }
         })
         this.newGame.onclick = () => {
-            onClickSound.play();
-            this.input.disabled = false;
-            this.game = new Hangman();
-            this.game.initialize();
-            this.game.draw();
+            onLeaveConfirm()
+                .then((confirm) => {
+                    if (confirm) {
+                        this.input.disabled = false;
+                        this.game = new Hangman();
+                        this.game.initialize();
+                        this.game.draw();
+                    }
+                });
         }
     }
 }
@@ -214,7 +178,7 @@ class BarleyLauncher extends React.Component {
         return (
             <React.Fragment>
                 <div className="app-menu">
-                    <Link to={`${repository}/`}>Back</Link>
+                    <Link to={`${repository}/`}><span id="back">Back</span></Link>
                     <div className="new-game">New Game</div>
                     <div className="clicks">Clicks: <span id="span-clicks">0</span></div>
                 </div>
@@ -224,6 +188,7 @@ class BarleyLauncher extends React.Component {
     }
 
     componentDidMount() {
+        this.backButton = document.getElementById('back');
         this.newGame = document.getElementsByClassName('new-game')[0];
         this.canvas = document.getElementById("barley-canvas");
         this.context = this.canvas.getContext("2d");
@@ -269,10 +234,16 @@ class BarleyLauncher extends React.Component {
             }
         }
         this.newGame.onclick = () => {
-            this.game = new BarleyBreak(this.context, this.cellSize);
-            this.game.mix(300);
-            this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-            this.game.draw();
+            onLeaveConfirm()
+                .then((confirm) => {
+                    if (confirm) {
+                        this.game = new BarleyBreak(this.context, this.cellSize);
+                        this.game.mix(300);
+                        this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                        this.game.draw();
+                        this.clicksDisplay.innerText = this.game.getClicks();
+                    }
+                });
         }
     }
 }
@@ -290,7 +261,7 @@ class MemoryLauncher extends React.Component {
         return (
             <React.Fragment>
                 <div className="app-menu">
-                    <Link to={`${repository}/`}>Back</Link>
+                    <Link to={`${repository}/`}><span id="back">Back</span></Link>
                     <div className="new-game">New Game</div>
                     <div className="clicks">Tries: <span id="span-clicks">0</span></div>
                 </div>
@@ -314,11 +285,17 @@ class MemoryLauncher extends React.Component {
     }
 
     componentDidMount() {
+        this.backButton = document.getElementById('back');
         this.newGame = document.getElementsByClassName('new-game')[0];
         this.clicksDisplay = document.getElementById("span-clicks");
         this.init();
         this.newGame.onclick = () => {
-            this.init();
+            onLeaveConfirm()
+                .then((confirm) => {
+                    if (confirm) {
+                        this.init();
+                    }
+                });
         }
         this.display.onclick = () => {
             if (this.game.win()) {
@@ -334,6 +311,63 @@ class MemoryLauncher extends React.Component {
             }
         }
     }
+}
+
+function Main() {
+    return (
+        <React.Fragment>
+            <div className="main-menu">
+                <Link to={`${repository}${barleyLink}`} className="game-link">
+                    Barley Break
+                    <img src={iconBarleyPath} alt="" width="130" height="110" />
+                </Link>
+                <Link to={`${repository}${hangmanLink}`} className="game-link">
+                    Hangman
+                    <img src={iconHangmanPath} alt="" width="130" height="110" />
+                </Link>
+                <Link to={`${repository}${memoryLink}`} className="game-link">
+                    Find Match
+                    <img src={iconMemoryPath} alt="" width="130" height="110" />
+                </Link>
+            </div>
+        </React.Fragment>
+    )
+}
+
+function NotFound() {
+    return (
+        <React.Fragment>
+            <div className="main-menu">
+                <Link to={`${repository}/`}>To Games List</Link>
+            </div>
+            <p>Sorry, we don't have a game like this yet :)</p>
+        </React.Fragment>
+    )
+}
+
+function GameRouter() {
+    return (
+        <Router>
+            <React.Fragment>
+                <Switch>
+                    <Route path={`${repository}/`} exact component={Main} />
+                    <Route path={`${repository}/hangman`} exact component={HangmanLauncher} />
+                    <Route path={`${repository}/barley-break`} exact component={BarleyLauncher} />
+                    <Route path={`${repository}/memory`} exact component={MemoryLauncher} />
+                    <Route component={NotFound} />
+                </Switch>
+            </React.Fragment>
+        </Router>
+    )
+}
+
+function onLeaveConfirm() {
+    return swal({
+        title: "Are you sure?",
+        text: "Current progress will not be saved!",
+        buttons: true,
+        dangerMode: true,
+    })
 }
 
 window.addEventListener('load', () => {
