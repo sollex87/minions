@@ -336,23 +336,14 @@ class MemoryLauncher extends React.Component {
     }
 }
 
-const volumeReduce = () => {
-    const playback = setInterval(() => {
-        greetingSound.volume -= 0.1;
-        if (greetingSound.volume < 0.2) {
-            greetingSound.pause();
-            clearInterval(playback);
-        }
-    }, 50)
-}
-
 window.addEventListener('load', () => {
     swal(greetImg, {
         className: 'welcome',
         button: 'Play!'
     })
-        .then(() => greetingSound.play())
-        .then(() => setTimeout(volumeReduce, 5500))
+        .then(() => {
+            greetingSound.play();
+        })
 });
 
 ReactDOM.render(<Header />, header);

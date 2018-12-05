@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Gloria+Hallelujah');
+@import url('https://fonts.googleapis.com/css?family=Pangolin');
 *{
-    font-family: 'Gloria Hallelujah', cursive;
+    font-family: 'Gloria Hallelujah', 'Pangolin', cursive;
     font-size: 18px;
     color: rgb(5, 142, 160);
 }
