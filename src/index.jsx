@@ -51,8 +51,15 @@ class Header extends React.Component {
     }
 
     logIn() {
-        const name = prompt('Enter your name:', '');
-        this.setState({ userName: name })
+        swal({
+            title: "Enter your name!",
+            text: '(letters only)',
+            content: "input",
+        })
+            .then((value) => {
+                this.setState({ userName: value });
+            });
+
     }
 
     headerButtons(props) {

@@ -6,6 +6,15 @@
     color: rgb(5, 142, 160);
 }
 
+html {
+    height: 100%;
+}
+
+body{
+    background: url("../assets/bg/all_three.jpg") 15% bottom no-repeat, url("../assets/bg/side_right2.jpg") right 30% no-repeat , url("../assets/bg/from_above.jpg") 7% top no-repeat;
+    background-size: 350px, 80px, 150px;
+}
+
 #barley-canvas {
     border: 3px solid #222;
     box-shadow: 0 0 10px #222;
