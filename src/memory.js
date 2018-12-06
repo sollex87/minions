@@ -16,7 +16,8 @@ export default class Memory {
       '0004',
       '0005',
       '0006',
-      '0007',]
+      '0007',
+    ]
     this.newSuits = this.mixSuits(this.suits);
     this.memory = document.getElementById('memory');
     this.clicksDisplay = document.getElementById("span-clicks");
@@ -42,7 +43,6 @@ export default class Memory {
       if (_that.lockBoard) return;
       if (this === _that.firstCard) return;
       this.classList.add('flip');
-
       if (_that.hasFlippedCard == false) {
         _that.hasFlippedCard = true;
         _that.firstCard = this;

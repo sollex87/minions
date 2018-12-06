@@ -7,12 +7,8 @@ export default function BarleyBreak(context, cellSize) {
     ];
 
     let clicks = 0;
-
-    function playClick() {
-        const clickSound = new Audio();
-        clickSound.src = require('../assets/click.mp3');
-        clickSound.autoplay = true;
-    }
+    const clickSound = new Audio();
+    clickSound.src = require('../assets/click.mp3');
 
     function cellView(x, y) {
         context.clearRect(x + 1, y + 1, cellSize - 2, cellSize - 2); // очистка ячейки
@@ -57,13 +53,14 @@ export default function BarleyBreak(context, cellSize) {
     };
 
     this.move = function (x, y) { // движение
+        console.log('move');
         let nullX = this.getNullCell().x;
         let nullY = this.getNullCell().y;
+        console.log(nullX, nullY);
         if (((x - 1 == nullX || x + 1 == nullX) && y == nullY) || ((y - 1 == nullY || y + 1 == nullY) && x == nullX)) {
             arr[nullY][nullX] = arr[y][x];
             arr[y][x] = 0;
             clicks++;
-            playClick();
         }
     };
 
@@ -87,6 +84,7 @@ export default function BarleyBreak(context, cellSize) {
     }
 
     this.mix = function (stepCount) { //перемешивание
+        console.log('mix');
         let x, y;
         for (let i = 0; i < stepCount; i++) {
             const nullX = this.getNullCell().x;

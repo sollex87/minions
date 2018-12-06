@@ -120,7 +120,6 @@ export default class Hangman {
             if (data == this.usedLetters[i]) {
                 used = true;
                 guessed = true;
-                console.log('used');
                 break;
             }
         }
@@ -131,13 +130,11 @@ export default class Hangman {
                     this.maskedWord[i] = `${data} `;
                     this.hiddenLettersAmount--;
                     guessed = true;
-                    console.log('guessed');
                 }
             }
         }
         if (!guessed) {
             this.triesCount--;
-            console.log('failed');
         }
         this.clearField();
         this.checkEndGame();

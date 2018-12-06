@@ -235,17 +235,19 @@ class BarleyLauncher extends React.Component {
         this.canvas.width = 320;
         this.canvas.height = 320;
         this.cellSize = this.canvas.width / 4;
+
         this.game = new BarleyBreak(this.context, this.cellSize);
         this.game.mix(300);
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height); //отрисовка пустой клетки
         this.game.draw();
 
-        this.canvas.onclick = (e) => {
+        this.canvas.addEventListener('click', (e) => {
             let x = (e.pageX - this.canvas.offsetLeft) / this.cellSize | 0; // клик события
             let y = (e.pageY - this.canvas.offsetTop) / this.cellSize | 0;
+            console.log(x, y);
             this.event(x, y);
             this.clicksDisplay.innerText = this.game.getClicks();
-        };
+        });
 
         this.canvas.ontouchend = (e) => {
             let x = (e.touches[0].pageX - this.canvas.offsetLeft) / this.cellSize | 0; //тач события
@@ -255,6 +257,7 @@ class BarleyLauncher extends React.Component {
         };
 
         this.event = (x, y) => { // собираем
+            console.log('on event')
             this.game.move(x, y);
             this.context.fillRect(0, 0, this.canvas.width, this.canvas.height); //отрисовка пустой клетки
             this.game.draw(); //отрисовка заполненых клеток и текста
