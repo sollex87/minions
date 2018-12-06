@@ -6,7 +6,6 @@ import Memory from './memory.js';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import swal from 'sweetalert';
 
-const header = document.getElementById('header');
 const root = document.getElementById('root');
 const repository = '/minions';
 const barleyLink = '/barley-break';
@@ -40,10 +39,18 @@ class Header extends React.Component {
         this.state = {
             userName: '',
             userDefault: 'guest',
+            greetingText: [
+                'Hi',
+                'Hello',
+                'Good day',
+                'Howdy',
+                "What's up"
+            ]
         };
 
         this.logOut = this.logOut.bind(this);
         this.logIn = this.logIn.bind(this);
+        this.greetingText = this.greetingText.bind(this);
     }
 
     logOut() {
@@ -53,7 +60,6 @@ class Header extends React.Component {
     logIn() {
         swal({
             title: "Enter your name!",
-            text: '(letters only)',
             content: "input",
         })
             .then((value) => {
@@ -78,21 +84,23 @@ class Header extends React.Component {
         )
     }
 
-    render() {
+    greetingText(props) {
         return (
-            <React.Fragment>
-                <p>
-                    <span id='header-greeting'>Hello</span>, <span id='header-name'>{this.state.userName ? this.state.userName : this.state.userDefault}</span>!
-                </p>
-                <this.headerButtons name={this.state.userName} logOut={this.logOut} logIn={this.logIn} />
-            </React.Fragment>
+            <span>
+                {props.data[Math.floor(Math.random() * 5)]}
+            </span>
         )
     }
 
-    componentWillMount() {
-        if (document.getElementsByClassName('preloader')[0]) {
-            document.getElementsByClassName('preloader')[0].remove();
-        }
+    render() {
+        return (
+            <div id="header" className="header">
+                <p>
+                    <this.greetingText data={this.state.greetingText} />, <span>{this.state.userName ? this.state.userName : this.state.userDefault}</span>!
+                </p>
+                <this.headerButtons name={this.state.userName} logOut={this.logOut} logIn={this.logIn} />
+            </div>
+        )
     }
 }
 
@@ -101,8 +109,16 @@ class HangmanLauncher extends React.Component {
         super();
 
         this.state = {
-            path: ''
+            rules: 'Guess the word from a given category in 5 attempts!'
         }
+
+        this.showRules = this.showRules.bind(this);
+    }
+
+    showRules() {
+        swal({
+            title: this.state.rules
+        });
     }
 
     render() {
@@ -111,6 +127,7 @@ class HangmanLauncher extends React.Component {
                 <div className="app-menu">
                     <Link to={`${repository}/`}><span id="back">Back</span></Link>
                     <div className="new-game">New Game</div>
+                    <div className="rules" onClick={this.showRules}>Rules</div>
                 </div>
                 <div className="hangman-main">
                     <canvas id="hangman-canvas" />
@@ -183,7 +200,16 @@ class BarleyLauncher extends React.Component {
 
         this.state = {
             clicks: 0,
+            rules: 'Place chips in order from 1 to 15 using the only free spot!'
         }
+
+        this.showRules = this.showRules.bind(this);
+    }
+
+    showRules() {
+        swal({
+            title: this.state.rules
+        });
     }
 
     render() {
@@ -192,6 +218,7 @@ class BarleyLauncher extends React.Component {
                 <div className="app-menu">
                     <Link to={`${repository}/`}><span id="back">Back</span></Link>
                     <div className="new-game">New Game</div>
+                    <div className="rules" onClick={this.showRules}>Rules</div>
                     <div className="clicks">Clicks: <span id="span-clicks">0</span></div>
                 </div>
                 <canvas id="barley-canvas" />
@@ -266,7 +293,10 @@ class MemoryLauncher extends React.Component {
 
         this.state = {
             clicks: 0,
+            rules: 'Find all pairs by turning cards over for the least number of attempts!'
         }
+
+        this.showRules = this.showRules.bind(this);
     }
 
     render() {
@@ -275,6 +305,7 @@ class MemoryLauncher extends React.Component {
                 <div className="app-menu">
                     <Link to={`${repository}/`}><span id="back">Back</span></Link>
                     <div className="new-game">New Game</div>
+                    <div className="rules" onClick={this.showRules}>Rules</div>
                     <div className="clicks">Tries: <span id="span-clicks">0</span></div>
                 </div>
                 <div id='memory' />
@@ -294,6 +325,12 @@ class MemoryLauncher extends React.Component {
         this.game = new Memory();
         this.clicksDisplay.innerText = this.game.getClicks();
         this.game.createCards();
+    }
+
+    showRules() {
+        swal({
+            title: this.state.rules
+        });
     }
 
     componentDidMount() {
@@ -361,6 +398,7 @@ function GameRouter() {
     return (
         <Router>
             <React.Fragment>
+                <Header />
                 <Switch>
                     <Route path={`${repository}/`} exact component={Main} />
                     <Route path={`${repository}/hangman`} exact component={HangmanLauncher} />
@@ -392,6 +430,6 @@ window.addEventListener('load', () => {
         })
 });
 
-ReactDOM.render(<Header />, header);
+// ReactDOM.render(<Header />, header);
 
 ReactDOM.render(<GameRouter />, root);

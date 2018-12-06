@@ -23,6 +23,12 @@ export default class Hangman {
                 new Image(120)
             ];
 
+        this.parts[0].src = require('../assets/hangman/hangman_1.png');
+        this.parts[1].src = require('../assets/hangman/hangman_2.png');
+        this.parts[2].src = require('../assets/hangman/hangman_3.png');
+        this.parts[3].src = require('../assets/hangman/hangman_4.png');
+        this.parts[4].src = require('../assets/hangman/hangman_5.png');
+
         this.triesCount = 5;
         this.category = '';
         this.word = '';
@@ -42,23 +48,15 @@ export default class Hangman {
 
     draw() {
         console.log('draw');
-        this.parts[0].src = require('../assets/hangman/hangman_1.png');
-        this.parts[1].src = require('../assets/hangman/hangman_2.png');
-        this.parts[2].src = require('../assets/hangman/hangman_3.png');
-        this.parts[3].src = require('../assets/hangman/hangman_4.png');
-        this.parts[4].src = require('../assets/hangman/hangman_5.png');
         this.canvas = document.getElementById('hangman-canvas');
         this.canvas.height = 320;
         this.canvas.width = 120;
         this.context = this.canvas.getContext('2d');
         for (let i = 0; i < this.triesCount; i += 1) {
-            console.log('draw cycle');
+            console.log('tries count', this.triesCount);
+            console.log('draw cycle', i);
             console.log(this.parts[i]);
-            this.parts[i].onload = () => {
-                console.log('draw cycle onload');
-                this.context.drawImage(this.parts[i], 0, 0, this.canvas.width, this.canvas.height);
-            }
-            
+            this.context.drawImage(this.parts[i], 0, 0, this.canvas.width, this.canvas.height);
         }
     }
 
