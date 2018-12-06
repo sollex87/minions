@@ -10,11 +10,6 @@ html {
     height: 100%;
 }
 
-body{
-    background: url("../assets/bg/all_three.jpg") 15% bottom no-repeat, url("../assets/bg/side_right2.jpg") right 30% no-repeat , url("../assets/bg/from_above.jpg") 7% top no-repeat;
-    background-size: 350px, 80px, 150px;
-}
-
 #barley-canvas {
     border: 3px solid #222;
     box-shadow: 0 0 10px #222;
@@ -26,6 +21,8 @@ body{
     border: 3px solid rgb(3, 106, 119);
     box-shadow: 0 0 10px rgb(3, 106, 119);
     border-radius: 7px;
+    background: url('../assets/hangman/hangman_0.jpg') no-repeat;
+    background-size: cover;
 }
 
 #memory {

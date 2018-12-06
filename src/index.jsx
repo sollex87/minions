@@ -88,6 +88,12 @@ class Header extends React.Component {
             </React.Fragment>
         )
     }
+
+    componentWillMount() {
+        if (document.getElementsByClassName('preloader')[0]) {
+            document.getElementsByClassName('preloader')[0].remove();
+        }
+    }
 }
 
 class HangmanLauncher extends React.Component {
@@ -121,7 +127,6 @@ class HangmanLauncher extends React.Component {
         this.backButton = document.getElementById('back');
         this.newGame = document.getElementsByClassName('new-game')[0];
         this.input = document.getElementById('letter');
-        this.input.disabled = false;
         this.reset = document.getElementById('reset');
         this.game = new Hangman();
         this.game.initialize();

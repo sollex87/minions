@@ -14,7 +14,16 @@ export default class Hangman {
                 'Albania', 'Armenia', 'Austria', 'Belarus', 'England', 'Croatia', 'Ecuador', 'Finland', 'Holland', 'Hungary', 'Jamaica', 'Ukraine',
             ],
         };
-        this.triesCount = 7;
+        this.parts =
+            [
+                new Image(120),
+                new Image(120),
+                new Image(120),
+                new Image(120),
+                new Image(120)
+            ];
+
+        this.triesCount = 5;
         this.category = '';
         this.word = '';
         this.maskedWord = [];
@@ -32,19 +41,25 @@ export default class Hangman {
     }
 
     draw() {
+        console.log('draw');
+        this.parts[0].src = require('../assets/hangman/hangman_1.png');
+        this.parts[1].src = require('../assets/hangman/hangman_2.png');
+        this.parts[2].src = require('../assets/hangman/hangman_3.png');
+        this.parts[3].src = require('../assets/hangman/hangman_4.png');
+        this.parts[4].src = require('../assets/hangman/hangman_5.png');
         this.canvas = document.getElementById('hangman-canvas');
         this.canvas.height = 320;
         this.canvas.width = 120;
         this.context = this.canvas.getContext('2d');
-        this.dudes = new Image();
-        this.dudes.src = require('../assets/hangman.jpg');
-        this.dudes.onload = () => {
-            if (this.triesCount > 0) {
-                this.context.drawImage(this.dudes, 0, ((7 - this.triesCount) * 20), this.canvas.width, this.canvas.height);
-            } else {
-                this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        for (let i = 0; i < this.triesCount; i += 1) {
+            console.log('draw cycle');
+            console.log(this.parts[i]);
+            this.parts[i].onload = () => {
+                console.log('draw cycle onload');
+                this.context.drawImage(this.parts[i], 0, 0, this.canvas.width, this.canvas.height);
             }
-        };
+            
+        }
     }
 
     clearField() {
@@ -106,6 +121,7 @@ export default class Hangman {
             if (data == this.usedLetters[i]) {
                 used = true;
                 guessed = true;
+                console.log('used');
                 break;
             }
         }
@@ -116,11 +132,13 @@ export default class Hangman {
                     this.maskedWord[i] = `${data} `;
                     this.hiddenLettersAmount--;
                     guessed = true;
+                    console.log('guessed');
                 }
             }
         }
         if (!guessed) {
             this.triesCount--;
+            console.log('failed');
         }
         this.clearField();
         this.checkEndGame();
