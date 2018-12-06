@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import swal from 'sweetalert';
 
 const root = document.getElementById('root');
-const mute = document.createElement('div');
+const mute = document.createElement('p');
 const repository = '/minions';
 const barleyLink = '/barley-break';
 const hangmanLink = '/hangman';
@@ -71,14 +71,14 @@ class Header extends React.Component {
     headerButtons(props) {
         if (props.name) {
             return (
-                <p onClick={props.logOut}>
+                <p onClick={props.logOut} className="button">
                     Log Out
                 </p>
             )
         }
 
         return (
-            <p onClick={props.logIn}>
+            <p onClick={props.logIn} className="button">
                 Log In
             </p>
         )
@@ -95,10 +95,13 @@ class Header extends React.Component {
     render() {
         return (
             <div id="header" className="header">
-                <p>
+                <p className="header-name">
                     <this.greetingText data={this.state.greetingText} />, <span>{this.state.userName ? this.state.userName : this.state.userDefault}</span>!
                 </p>
+                <div className="header-buttons">
+                <p className="button">Highscores</p>
                 <this.headerButtons name={this.state.userName} logOut={this.logOut} logIn={this.logIn} />
+                </div>
             </div>
         )
     }
@@ -242,9 +245,6 @@ class BarleyLauncher extends React.Component {
         this.game.draw();
 
         this.canvas.addEventListener('click', (e) => {
-            console.log(e.pageX, e.pageY);
-            console.log(this.canvas.offsetLeft);
-            console.log(this.canvas.offsetTop);
             let x = (e.pageX - this.canvas.offsetLeft) / this.cellSize | 0; // клик события
             let y = (e.pageY - this.canvas.offsetTop) / this.cellSize | 0;
             this.event(x, y);
@@ -259,7 +259,6 @@ class BarleyLauncher extends React.Component {
         };
 
         this.event = (x, y) => { // собираем
-            console.log('on event')
             this.game.move(x, y);
             this.context.fillRect(0, 0, this.canvas.width, this.canvas.height); //отрисовка пустой клетки
             this.game.draw(); //отрисовка заполненых клеток и текста
@@ -372,15 +371,15 @@ function Main() {
         <React.Fragment>
             <div className="main-menu">
                 <Link to={`${repository}${barleyLink}`} className="game-link">
-                    Barley Break
+                Barley Break
                     <img src={iconBarleyPath} alt="" width="110" height="110" />
                 </Link>
                 <Link to={`${repository}${hangmanLink}`} className="game-link">
-                    Hangman
+                Hangman
                     <img src={iconHangmanPath} alt="" width="110" height="110" />
                 </Link>
                 <Link to={`${repository}${memoryLink}`} className="game-link">
-                    Find Match
+                Find Match
                     <img src={iconMemoryPath} alt="" width="110" height="110" />
                 </Link>
             </div>
@@ -426,9 +425,9 @@ function onLeaveConfirm() {
 }
 
 function createMuteButton() {
-    mute.innerText = 'mute';
-    mute.classList.add('mute');
-    document.getElementsByClassName('wrapper')[0].append(mute);
+    mute.innerText = 'Mute';
+    mute.classList.add('button');
+    document.getElementsByClassName('header-buttons')[0].append(mute);
     mute.addEventListener('click', removeMuteButton);
 }
 

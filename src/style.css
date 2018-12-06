@@ -10,6 +10,18 @@ html {
     height: 100%;
 }
 
+body{
+    /* background: url('../assets/bg/from_above.jpg') 7% top no-repeat,
+    url('../assets/bg/side_right2.jpg') right 50% no-repeat;
+    background-size: 150px, 150px; */
+}
+
+/* @media screen and (max-width: 800px) and (max-height: 400px){
+    body{
+        background-color: black;
+    }
+} */
+
 #barley-canvas {
     border: 3px solid #222;
     box-shadow: 0 0 10px #222;
@@ -25,19 +37,18 @@ html {
     background-size: cover;
 }
 
-.mute{
+.button{
     background-color: rgb(255, 230, 0);
     border: 2px solid rgb(3, 106, 119);
     box-shadow: 0 0 2px rgb(3, 106, 119);
-    position: absolute;
-    font-size: 14px;
-    line-height: 1.2;
+    font-size: 4px;
+    line-height: 1.5;
     padding: 3px 10px;
-    top: 0;
-    right: 0;
     border-radius: 5px;
     text-align: center;
     cursor: pointer;
+    display: block;
+    margin-left: 10px;
 }
 
 #memory {
@@ -58,18 +69,28 @@ html {
 }
 
 .header{
+    position: relative;
     display: flex;
-    justify-content: space-around;
-    line-height: 1;
+    justify-content: space-between;
+}
+
+.header-buttons{
+    display: flex;
+}
+
+.header-name{
+    text-transform: uppercase;
+    vertical-align: baseline;
 }
 
 .header *{
     font-size: 20px;
     font-weight: bold;
+    /* line-height: 1.7; */
 }
 
 .wrapper{
-    position: relative;
+    /* position: relative; */
     width: 100%;
     max-width: 700px;
     margin: 0 auto;
@@ -166,6 +187,7 @@ canvas{
   border-radius: 5px;
   background: #1C7CCC;
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 .back {
     transform: rotateY(180deg);
