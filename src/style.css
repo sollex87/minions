@@ -38,20 +38,33 @@ body{
     color: rgb(5, 142, 160);
     height: 100%;
     
-    /* background: url('../assets/bg/from_above.jpg') 7% top no-repeat,
+    /* background: url('../assets/bg/top1.png') 7% top no-repeat,
     url('../assets/bg/side_right2.jpg') right 50% no-repeat;
     background-size: 150px, 150px; */
 }
 
-/* @media screen and (max-width: 800px) and (max-height: 400px){
+@media (min-height: 330px) and (min-width: 670px) {
     body{
-        background-color: black;
+        background: url('../assets/bg/left1.png') left 10% no-repeat,
+        url('../assets/bg/one.png') 90% bottom no-repeat,
+        url('../assets/bg/top2.png') right top no-repeat;
+        background-size: 100px, 100px, 70px;
     }
-} */
+}
+
+@media (min-height: 420px) and (min-width: 870px) {
+    body{
+        background: url('../assets/bg/left1.png') left 10% no-repeat,
+        url('../assets/bg/one.png') 90% bottom no-repeat,
+        url('../assets/bg/top2.png') right top no-repeat,
+        url('../assets/bg/two.png') 10% bottom no-repeat;
+        background-size: 70px, 100px, 70px, 130px;
+    }
+}
 
 .wrapper{
     width: 100%;
-    max-width: 700px;
+    max-width: 500px;
     margin: 0 auto;
     height: 100%;
 }
