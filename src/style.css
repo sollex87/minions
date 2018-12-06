@@ -1,9 +1,31 @@
 @import url('https://fonts.googleapis.com/css?family=Gloria+Hallelujah');
 @import url('https://fonts.googleapis.com/css?family=Pangolin');
 *{
-    font-family: 'Gloria Hallelujah', 'Pangolin', cursive;
-    font-size: 18px;
-    color: rgb(5, 142, 160);
+    margin: 0;
+    padding: 0;
+}
+
+.button{
+    background-color: rgb(255, 230, 0);
+    box-shadow: 0 0 5px rgb(3, 106, 119);
+    font-size: 14px;
+    line-height: 2.2;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: 0.3s ease-in-out;
+    box-sizing: border-box;
+    padding: 0 7px;
+}
+
+.button:hover{
+    background-color: rgb(255, 237, 79);
+    box-shadow: 0 0 10px 1px rgb(3, 106, 119);
+}
+
+canvas{
+    display: inline;
 }
 
 html {
@@ -11,6 +33,11 @@ html {
 }
 
 body{
+    font-family: 'Gloria Hallelujah', 'Pangolin', cursive;
+    font-size: 18px;
+    color: rgb(5, 142, 160);
+    height: 100%;
+    
     /* background: url('../assets/bg/from_above.jpg') 7% top no-repeat,
     url('../assets/bg/side_right2.jpg') right 50% no-repeat;
     background-size: 150px, 150px; */
@@ -21,6 +48,13 @@ body{
         background-color: black;
     }
 } */
+
+.wrapper{
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    height: 100%;
+}
 
 #barley-canvas {
     border: 3px solid #222;
@@ -35,20 +69,6 @@ body{
     border-radius: 7px;
     background: url('../assets/hangman/hangman_0.jpg') no-repeat;
     background-size: cover;
-}
-
-.button{
-    background-color: rgb(255, 230, 0);
-    border: 2px solid rgb(3, 106, 119);
-    box-shadow: 0 0 2px rgb(3, 106, 119);
-    font-size: 4px;
-    line-height: 1.5;
-    padding: 3px 10px;
-    border-radius: 5px;
-    text-align: center;
-    cursor: pointer;
-    display: block;
-    margin-left: 10px;
 }
 
 #memory {
@@ -69,9 +89,11 @@ body{
 }
 
 .header{
+    margin-top: 20px;
     position: relative;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .header-buttons{
@@ -79,40 +101,50 @@ body{
 }
 
 .header-name{
+    font-size: 24px;
+    font-weight: bold;
     text-transform: uppercase;
     vertical-align: baseline;
 }
 
-.header *{
-    font-size: 20px;
-    font-weight: bold;
-    /* line-height: 1.7; */
-}
-
-.wrapper{
-    /* position: relative; */
-    width: 100%;
-    max-width: 700px;
-    margin: 0 auto;
+.header-name-span{
+    color: rgb(247, 210, 0);
 }
 
 .main-menu{
+    margin-top: 20px;
     display: flex;
     justify-content: space-between;
+}
+
+.main-menu a{
+    color: rgb(5, 142, 160);
+}
+
+.main-menu a:visited{
+    color: rgb(5, 142, 160);
 }
 
 .app-menu{
     display: flex;
     justify-content: space-between;
-    padding: 20px 40px;
+    margin: 10px 0;
+}
+
+.app-menu a{
+    color: rgb(5, 142, 160);
+}
+
+.app-menu a:visited{
+    color: rgb(5, 142, 160);
+}
+
+.clicks{
+    margin: 10px 0;
 }
 
 #root{
     text-align: center;
-}
-
-canvas{
-    display: inline;
 }
 
 #letter{
@@ -144,10 +176,6 @@ canvas{
 
 .swal-modal.welcome{
     background-color: rgb(255, 229, 32);
-}
-
-.clicks{
-    list-style-type: none;
 }
 
 .swal-button{
@@ -189,9 +217,11 @@ canvas{
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
+
 .back {
     transform: rotateY(180deg);
   }
+
 .flip {
     transform: rotateY(180deg);
   }
@@ -211,9 +241,19 @@ canvas{
 
   
 @media screen and (max-width: 450px){
-    .main-menu{
+    .header{
         flex-direction: column;
         align-items: center;
+    }
+
+    .main-menu{
+        margin-top: 0;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .main-menu a{
+        margin-top: 20px;
     }
 }
 

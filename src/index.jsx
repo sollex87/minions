@@ -71,16 +71,16 @@ class Header extends React.Component {
     headerButtons(props) {
         if (props.name) {
             return (
-                <p onClick={props.logOut} className="button">
+                <div onClick={props.logOut} className="button">
                     Log Out
-                </p>
+                </div>
             )
         }
 
         return (
-            <p onClick={props.logIn} className="button">
+            <div onClick={props.logIn} className="button">
                 Log In
-            </p>
+            </div>
         )
     }
 
@@ -95,11 +95,11 @@ class Header extends React.Component {
     render() {
         return (
             <div id="header" className="header">
-                <p className="header-name">
-                    <this.greetingText data={this.state.greetingText} />, <span>{this.state.userName ? this.state.userName : this.state.userDefault}</span>!
-                </p>
+                <div className="header-name">
+                    <this.greetingText data={this.state.greetingText} />, <span className="header-name-span">{this.state.userName ? this.state.userName : this.state.userDefault}!</span>
+                </div>
                 <div className="header-buttons">
-                <p className="button">Highscores</p>
+                <div className="button">Highscores</div>
                 <this.headerButtons name={this.state.userName} logOut={this.logOut} logIn={this.logIn} />
                 </div>
             </div>
