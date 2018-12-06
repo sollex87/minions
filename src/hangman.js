@@ -22,7 +22,9 @@ export default class Hangman {
                 new Image(120),
                 new Image(120)
             ];
+        this.preload = new Image(120);
 
+        this.preload.src = require('../assets/hangman.jpg');
         this.parts[0].src = require('../assets/hangman/hangman_1.png');
         this.parts[1].src = require('../assets/hangman/hangman_2.png');
         this.parts[2].src = require('../assets/hangman/hangman_3.png');
@@ -47,15 +49,14 @@ export default class Hangman {
     }
 
     draw() {
-        console.log('draw');
         this.canvas = document.getElementById('hangman-canvas');
         this.canvas.height = 320;
         this.canvas.width = 120;
         this.context = this.canvas.getContext('2d');
+        this.preload.onload = () => {
+            this.context.drawImage(this.preload, 0, 0, this.canvas.width, this.canvas.height);
+        }
         for (let i = 0; i < this.triesCount; i += 1) {
-            console.log('tries count', this.triesCount);
-            console.log('draw cycle', i);
-            console.log(this.parts[i]);
             this.context.drawImage(this.parts[i], 0, 0, this.canvas.width, this.canvas.height);
         }
     }

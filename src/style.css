@@ -25,6 +25,19 @@ html {
     background-size: cover;
 }
 
+.mute{
+    background-color: rgb(255, 230, 0);
+    border: 3px solid rgb(3, 106, 119);
+    box-shadow: 0 0 10px rgb(3, 106, 119);
+    position: absolute;
+    width: 100px;
+    top: 20px;
+    right: 20px;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+}
+
 #memory {
     border: 3px solid rgb(3, 106, 119);
     box-shadow: 0 0 10px rgb(3, 106, 119);

@@ -420,6 +420,17 @@ function onLeaveConfirm() {
     })
 }
 
+function createMuteButton() {
+    const mute = document.createElement('div')
+    mute.innerText = 'mute';
+    mute.classList.add('mute');
+    document.body.append(mute);
+    mute.addEventListener('click', () => {
+        greetingSound.pause();
+        mute.remove();
+    })
+}
+
 window.addEventListener('load', () => {
     swal(greetImg, {
         className: 'welcome',
@@ -427,9 +438,8 @@ window.addEventListener('load', () => {
     })
         .then(() => {
             greetingSound.play();
+            createMuteButton();
         })
 });
-
-// ReactDOM.render(<Header />, header);
 
 ReactDOM.render(<GameRouter />, root);
