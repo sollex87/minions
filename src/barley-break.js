@@ -56,11 +56,21 @@ export default function BarleyBreak(context, cellSize) {
         console.log('move');
         let nullX = this.getNullCell().x;
         let nullY = this.getNullCell().y;
+        console.log(x, y);
         console.log(nullX, nullY);
+        console.log(x - 1 == nullX);
+        console.log(x + 1 == nullX);
+        console.log(y == nullY);
+        console.log('final1', (x - 1 == nullX || x + 1 == nullX) && y == nullY);
+        console.log(y - 1 == nullY);
+        console.log(y + 1 == nullY);
+        console.log(x == nullX);
+        console.log('final2', (y - 1 == nullY || y + 1 == nullY) && x == nullX);
         if (((x - 1 == nullX || x + 1 == nullX) && y == nullY) || ((y - 1 == nullY || y + 1 == nullY) && x == nullX)) {
             arr[nullY][nullX] = arr[y][x];
             arr[y][x] = 0;
             clicks++;
+            console.log('moved');
             clickSound.play();
         }
     };

@@ -242,9 +242,11 @@ class BarleyLauncher extends React.Component {
         this.game.draw();
 
         this.canvas.addEventListener('click', (e) => {
+            console.log(e.pageX, e.pageY);
+            console.log(this.canvas.offsetLeft);
+            console.log(this.canvas.offsetTop);
             let x = (e.pageX - this.canvas.offsetLeft) / this.cellSize | 0; // клик события
             let y = (e.pageY - this.canvas.offsetTop) / this.cellSize | 0;
-            console.log(x, y);
             this.event(x, y);
             this.clicksDisplay.innerText = this.game.getClicks();
         });
