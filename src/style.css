@@ -60,6 +60,7 @@ html {
 .header{
     display: flex;
     justify-content: space-around;
+    line-height: 1;
 }
 
 .header *{
@@ -99,6 +100,7 @@ canvas{
     border-radius: 5px;
     background: rgb(252, 235, 90);
     text-align: center;
+    width: 180px;
 }
 
 .hangman-interact{
@@ -200,7 +202,7 @@ canvas{
     }
 
     .game-link img{
-        width: 180px;
+        width: 150px;
         height: 150px;
     }
 }

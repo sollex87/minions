@@ -219,8 +219,8 @@ class BarleyLauncher extends React.Component {
                     <Link to={`${repository}/`}><span id="back">Back</span></Link>
                     <div className="new-game">New Game</div>
                     <div className="rules" onClick={this.showRules}>Rules</div>
-                    <div className="clicks">Clicks: <span id="span-clicks">0</span></div>
                 </div>
+                <div className="clicks">Clicks: <span id="span-clicks">0</span></div>
                 <canvas id="barley-canvas" />
             </React.Fragment>
         )
@@ -306,8 +306,8 @@ class MemoryLauncher extends React.Component {
                     <Link to={`${repository}/`}><span id="back">Back</span></Link>
                     <div className="new-game">New Game</div>
                     <div className="rules" onClick={this.showRules}>Rules</div>
-                    <div className="clicks">Tries: <span id="span-clicks">0</span></div>
                 </div>
+                <div className="clicks">Tries: <span id="span-clicks">0</span></div>
                 <div id='memory' />
             </React.Fragment>
         )
@@ -368,15 +368,15 @@ function Main() {
             <div className="main-menu">
                 <Link to={`${repository}${barleyLink}`} className="game-link">
                     Barley Break
-                    <img src={iconBarleyPath} alt="" width="130" height="110" />
+                    <img src={iconBarleyPath} alt="" width="110" height="110" />
                 </Link>
                 <Link to={`${repository}${hangmanLink}`} className="game-link">
                     Hangman
-                    <img src={iconHangmanPath} alt="" width="130" height="110" />
+                    <img src={iconHangmanPath} alt="" width="110" height="110" />
                 </Link>
                 <Link to={`${repository}${memoryLink}`} className="game-link">
                     Find Match
-                    <img src={iconMemoryPath} alt="" width="130" height="110" />
+                    <img src={iconMemoryPath} alt="" width="110" height="110" />
                 </Link>
             </div>
         </React.Fragment>
