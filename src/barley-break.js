@@ -61,6 +61,7 @@ export default function BarleyBreak(context, cellSize) {
             arr[nullY][nullX] = arr[y][x];
             arr[y][x] = 0;
             clicks++;
+            clickSound.play();
         }
     };
 
