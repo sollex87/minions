@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import swal from 'sweetalert';
 
 const root = document.getElementById('root');
+const mute = document.createElement('div');
 const repository = '/minions';
 const barleyLink = '/barley-break';
 const hangmanLink = '/hangman';
@@ -15,8 +16,7 @@ const memoryLink = '/memory';
 const winImg = new Image(300);
 const lossImg = new Image(300);
 const greetImg = new Image(300);
-
-const greetingSound = new Audio();
+const welcomeSound = new Audio();
 const onClickSound = new Audio();
 const onLossSound = new Audio();
 const onWinSound = new Audio();
@@ -27,7 +27,7 @@ const iconMemoryPath = require('../assets/icon-memory.png');
 winImg.src = require('../assets/win_case.jpg');
 lossImg.src = require('../assets/loss_case.jpg');
 greetImg.src = require('../assets/start.jpg');
-greetingSound.src = require('../assets/welcome.mp3');
+welcomeSound.src = require('../assets/welcome.mp3');
 onClickSound.src = require('../assets/click.mp3');
 onLossSound.src = require('../assets/loss.mp3');
 onWinSound.src = require('../assets/win.mp3');
@@ -421,14 +421,15 @@ function onLeaveConfirm() {
 }
 
 function createMuteButton() {
-    const mute = document.createElement('div')
     mute.innerText = 'mute';
     mute.classList.add('mute');
-    document.body.append(mute);
-    mute.addEventListener('click', () => {
-        greetingSound.pause();
-        mute.remove();
-    })
+    document.getElementsByClassName('wrapper')[0].append(mute);
+    mute.addEventListener('click', removeMuteButton);
+}
+
+function removeMuteButton() {
+    welcomeSound.pause();
+    mute.remove();
 }
 
 window.addEventListener('load', () => {
@@ -437,8 +438,9 @@ window.addEventListener('load', () => {
         button: 'Play!'
     })
         .then(() => {
-            greetingSound.play();
+            welcomeSound.play();
             createMuteButton();
+            welcomeSound.onended = removeMuteButton;
         })
 });
 
