@@ -37,16 +37,12 @@ body{
     font-size: 18px;
     color: rgb(5, 142, 160);
     height: 100%;
-    
-    /* background: url('../assets/bg/top1.png') 7% top no-repeat,
-    url('../assets/bg/side_right2.jpg') right 50% no-repeat;
-    background-size: 150px, 150px; */
 }
 
 @media (min-height: 330px) and (min-width: 670px) {
     body{
         background: url('../assets/bg/left1.png') left 10% no-repeat,
-        url('../assets/bg/one.png') 90% bottom no-repeat,
+        url('../assets/bg/one.png') 90% 80% no-repeat,
         url('../assets/bg/top2.png') right top no-repeat;
         background-size: 100px, 100px, 70px;
     }
@@ -55,8 +51,8 @@ body{
 @media (min-height: 420px) and (min-width: 870px) {
     body{
         background: url('../assets/bg/left1.png') left 10% no-repeat,
-        url('../assets/bg/one.png') 90% bottom no-repeat,
-        url('../assets/bg/top2.png') right top no-repeat,
+        url('../assets/bg/one.png') 85% 75% no-repeat,
+        url('../assets/bg/top2.png') 95% top no-repeat,
         url('../assets/bg/two.png') 10% bottom no-repeat;
         background-size: 70px, 100px, 70px, 130px;
     }
@@ -67,11 +63,12 @@ body{
     max-width: 500px;
     margin: 0 auto;
     height: 100%;
+    box-sizing: border-box;
 }
 
 #barley-canvas {
-    border: 3px solid #222;
-    box-shadow: 0 0 10px #222;
+    border: 3px solid rgb(3, 106, 119);
+    box-shadow: 0 0 10px rgb(3, 106, 119);
     border-radius: 7px;
     background: url("../assets/barley-cell.jpg") repeat;
 }
@@ -267,6 +264,10 @@ body{
 
     .main-menu a{
         margin-top: 20px;
+    }
+
+    .main-menu a:last-child{
+        padding-bottom: 30px;
     }
 }
 
