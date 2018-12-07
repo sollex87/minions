@@ -42,19 +42,25 @@ body{
 @media (min-height: 330px) and (min-width: 670px) {
     body{
         background: url('../assets/bg/left1.png') left 10% no-repeat,
-        url('../assets/bg/one.png') 90% 80% no-repeat,
+        url('../assets/bg/one.png') 95% 80% no-repeat,
         url('../assets/bg/top2.png') right top no-repeat;
         background-size: 100px, 100px, 70px;
     }
 }
 
-@media (min-height: 420px) and (min-width: 870px) {
+@media (min-height: 460px) and (min-width: 870px) {
     body{
         background: url('../assets/bg/left1.png') left 10% no-repeat,
-        url('../assets/bg/one.png') 85% 75% no-repeat,
+        url('../assets/bg/one.png') 90% 80% no-repeat,
         url('../assets/bg/top2.png') 95% top no-repeat,
-        url('../assets/bg/two.png') 10% bottom no-repeat;
-        background-size: 70px, 100px, 70px, 130px;
+        url('../assets/bg/bg_hq.png') 30% bottom no-repeat;
+        background-size: 100px, 140px, 100px, 250px;
+    }
+}
+
+@media (min-height: 600px) and (min-width: 1100px) {
+    body{
+        background-size: 170px, 200px, 200px, 370px;
     }
 }
 
