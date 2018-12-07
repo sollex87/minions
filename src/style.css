@@ -105,7 +105,6 @@ body{
 }
 
 .header{
-    margin-top: 20px;
     position: relative;
     display: flex;
     justify-content: space-between;
@@ -160,6 +159,7 @@ body{
 
 #root{
     text-align: center;
+    padding-top: 20px;
 }
 
 .hangman-main{
