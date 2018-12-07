@@ -1,4 +1,123 @@
-export default class Hangman {
+import React from 'react';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import swal from 'sweetalert';
+
+export default class HangmanLauncher extends React.Component {
+    constructor() {
+        super();
+
+        this.state = {
+            rules: 'Guess the word from a given category in 5 attempts!'
+        }
+
+        this.repository = '/minions';
+
+        this.winImg = new Image(300);
+        this.lossImg = new Image(300);
+
+        this.onWinSound = new Audio();
+        this.onLossSound = new Audio();
+        this.onClickSound = new Audio();
+
+        this.winImg.src = require('../assets/win_case.jpg');
+        this.lossImg.src = require('../assets/loss_case.jpg');
+        this.onWinSound.src = require('../assets/win.mp3');
+        this.onLossSound.src = require('../assets/loss.mp3');
+        this.onClickSound.src = require('../assets/click.mp3');
+
+        this.showRules = this.showRules.bind(this);
+        this.onLeaveConfirm = this.onLeaveConfirm.bind(this);
+    }
+
+    onLeaveConfirm() {
+        return swal({
+            title: "Are you sure?",
+            text: "Current progress will not be saved!",
+            buttons: true,
+            dangerMode: true,
+        })
+    }
+
+    showRules() {
+        swal({
+            title: this.state.rules
+        });
+    }
+
+    render() {
+        return (
+            <React.Fragment>
+                <div className="app-menu">
+                    <Link to={`${this.repository}/`}><span id="back">Back</span></Link>
+                    <div className="new-game">New Game</div>
+                    <div className="rules" onClick={this.showRules}>Rules</div>
+                </div>
+                <div className="hangman-main">
+                    <canvas id="hangman-canvas" />
+                    <div className="hangman-interact">
+                        <div id="display" />
+                        <input type="text" id='letter' className='hangman-input' placeholder="Type letter here" />
+                    </div>
+                </div>
+            </React.Fragment>
+        )
+    }
+
+    componentDidMount() {
+        this.backButton = document.getElementById('back');
+        this.newGame = document.getElementsByClassName('new-game')[0];
+        this.input = document.getElementById('letter');
+        this.reset = document.getElementById('reset');
+        this.game = new Hangman();
+        this.game.initialize();
+        this.game.draw();
+        this.input.addEventListener('input', () => {
+            this.onClickSound.play();
+            this.game.compareChar(this.input.value);
+            this.game.draw();
+            this.input.value = '';
+            if (this.game.loss) {
+                this.onLossSound.play();
+                swal(this.lossImg, {
+                    title: "LOSS!",
+                    button: 'Try again!'
+                })
+                    .then(() => this.onLossSound.pause())
+                    .then(() => {
+                        this.game = new Hangman();
+                        this.game.initialize();
+                        this.game.draw();
+                    })
+            }
+            else if (this.game.win) {
+                this.onWinSound.play();
+                swal(this.winImg, {
+                    title: "WIN!",
+                    button: 'Hooray!'
+                })
+                    .then(() => this.onWinSound.pause())
+                    .then(() => {
+                        this.game = new Hangman();
+                        this.game.initialize();
+                        this.game.draw();
+                    })
+            }
+        })
+        this.newGame.onclick = () => {
+            onLeaveConfirm()
+                .then((confirm) => {
+                    if (confirm) {
+                        this.input.disabled = false;
+                        this.game = new Hangman();
+                        this.game.initialize();
+                        this.game.draw();
+                    }
+                });
+        }
+    }
+}
+
+class Hangman {
     constructor() {
         this.words = {
             'a capital': [
@@ -96,6 +215,7 @@ export default class Hangman {
 
         const wordField = document.createElement('p');
         wordField.innerText = this.maskedWord.join('');
+        wordField.classList.add('hangman-mask');
         display.append(wordField);
 
         const usedLettersField = document.createElement('p');

@@ -1,4 +1,102 @@
-export default class Memory {
+import React from 'react';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import swal from 'sweetalert';
+
+export default class MemoryLauncher extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      clicks: 0,
+      rules: 'Find all pairs by turning cards over for the least number of attempts!'
+    }
+
+    this.repository = '/minions';
+
+    this.winImg = new Image(300);
+
+    this.onWinSound = new Audio();
+
+    this.winImg.src = require('../assets/win_case.jpg');
+    this.onWinSound.src = require('../assets/win.mp3');
+
+    this.showRules = this.showRules.bind(this);
+    this.onLeaveConfirm = this.onLeaveConfirm.bind(this);
+  }
+
+  render() {
+    return (
+      <React.Fragment>
+        <div className="app-menu">
+          <Link to={`${this.repository}/`}><span id="back">Back</span></Link>
+          <div className="new-game">New Game</div>
+          <div className="rules" onClick={this.showRules}>Rules</div>
+        </div>
+        <div className="clicks">Tries: <span id="span-clicks">0</span></div>
+        <div id='memory' />
+      </React.Fragment>
+    )
+  }
+
+  onLeaveConfirm() {
+    return swal({
+      title: "Are you sure?",
+      text: "Current progress will not be saved!",
+      buttons: true,
+      dangerMode: true,
+    })
+  }
+
+  clearField() {
+    this.display = document.getElementById('memory');
+    while (this.display.firstChild) {
+      this.display.removeChild(this.display.firstChild);
+    };
+  }
+
+  init() {
+    this.clearField();
+    this.game = new MemoryGame();
+    this.clicksDisplay.innerText = this.game.getClicks();
+    this.game.createCards();
+  }
+
+  showRules() {
+    swal({
+      title: this.state.rules
+    });
+  }
+
+  componentDidMount() {
+    this.backButton = document.getElementById('back');
+    this.newGame = document.getElementsByClassName('new-game')[0];
+    this.clicksDisplay = document.getElementById("span-clicks");
+    this.init();
+    this.newGame.onclick = () => {
+      this.onLeaveConfirm()
+        .then((confirm) => {
+          if (confirm) {
+            this.init();
+          }
+        });
+    }
+    this.display.onclick = () => {
+      if (this.game.win()) {
+        this.onWinSound.play();
+        swal(this.winImg, {
+          title: "WIN!",
+          button: 'Hooray!'
+        })
+          .then(() => this.onWinSound.pause())
+          .then(() => {
+            this.init();
+          })
+      }
+    }
+  }
+}
+
+class MemoryGame {
   constructor() {
     this.suits = [
       '0000',
