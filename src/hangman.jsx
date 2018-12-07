@@ -104,7 +104,7 @@ export default class HangmanLauncher extends React.Component {
             }
         })
         this.newGame.onclick = () => {
-            onLeaveConfirm()
+            this.onLeaveConfirm()
                 .then((confirm) => {
                     if (confirm) {
                         this.input.disabled = false;
