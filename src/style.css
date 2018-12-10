@@ -104,6 +104,12 @@ body{
     display: block;
 }
 
+#qrcode{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
 .header{
     position: relative;
     display: flex;
@@ -328,7 +334,7 @@ body{
 
 .preloader .container{
     height: 30px;
-    vertical-align: bottom;
+    padding-bottom: 50px;
 }
 
 .preloader .line-1 { animation-delay: 800ms; }

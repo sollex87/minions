@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import swal from 'sweetalert';
 import HangmanLauncher from './hangman.jsx';
 import BarleyLauncher from './barley-break.jsx';
 import MemoryLauncher from './memory.jsx';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
-import swal from 'sweetalert';
+import Highscores from './highscores.jsx';
 
 const root = document.getElementById('root');
 const mute = document.createElement('div');
@@ -42,6 +43,7 @@ class Header extends React.Component {
         this.logOut = this.logOut.bind(this);
         this.logIn = this.logIn.bind(this);
         this.greetingText = this.greetingText.bind(this);
+        this.getScores = this.getScores.bind(this);
     }
 
     logOut() {
@@ -83,6 +85,11 @@ class Header extends React.Component {
         )
     }
 
+    getScores() {
+        const score = new Highscores();
+        score.showScores();
+    }
+
     render() {
         return (
             <div id="header" className="header">
@@ -90,8 +97,8 @@ class Header extends React.Component {
                     <this.greetingText data={this.state.greetingText} />, <span className="header-name-span">{this.state.userName ? this.state.userName : this.state.userDefault}!</span>
                 </div>
                 <div className="header-buttons">
-                <div className="button">Highscores</div>
-                <this.headerButtons name={this.state.userName} logOut={this.logOut} logIn={this.logIn} />
+                    <div className="button" onClick={this.getScores}>Highscores</div>
+                    <this.headerButtons name={this.state.userName} logOut={this.logOut} logIn={this.logIn} />
                 </div>
             </div>
         )
@@ -103,15 +110,15 @@ function Main() {
         <React.Fragment>
             <div className="main-menu">
                 <Link to={`${repository}${barleyLink}`} className="game-link">
-                Barley Break
+                    Barley Break
                     <img src={iconBarleyPath} alt="" width="110" height="110" />
                 </Link>
                 <Link to={`${repository}${hangmanLink}`} className="game-link">
-                Hangman
+                    Hangman
                     <img src={iconHangmanPath} alt="" width="110" height="110" />
                 </Link>
                 <Link to={`${repository}${memoryLink}`} className="game-link">
-                Find Match
+                    Find Match
                     <img src={iconMemoryPath} alt="" width="110" height="110" />
                 </Link>
             </div>
@@ -170,5 +177,10 @@ window.addEventListener('load', () => {
             welcomeSound.onended = removeMuteButton;
         })
 });
+
+const qrcode = document.getElementById('qrcode');
+qrcode.addEventListener('click', () => {
+    qrcode.remove();
+})
 
 ReactDOM.render(<GameRouter />, root);

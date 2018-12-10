@@ -6,7 +6,7 @@
     "sweetalert": "^2.1.2"
   },
   "name": "minions",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "index.js",
   "devDependencies": {
     "cssnano": "^4.1.7",
@@ -22,7 +22,7 @@
   "description": "ReactJS graduation project",
   "scripts": {
     "start": "parcel ./src/index.html",
-    "build": "parcel build ./src/index.html --public-url /minions && cp dist/index.html dist/404.html",
+    "build": "parcel build ./src/index.html --public-url /minions && workbox generateSW workbox-config.js && cp dist/index.html dist/404.html",
     "deploy": "gh-pages -d dist"
   }
 }
