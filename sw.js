@@ -69,23 +69,23 @@ self.__precacheManifest = [
   },
   {
     "url": "index.html",
-    "revision": "0bd2a4cae02863b59dfa7df10035268b"
+    "revision": "8f077d49cf44cba9d6a54b3d2297b101"
   },
   {
     "url": "loss_case.971297ef.jpg",
     "revision": "2dafd4362bf5d8264d23d83eaee02650"
   },
   {
-    "url": "src.b8e0edae.js",
-    "revision": "adfc64ba3e82e1a36e397b845a2a3a28"
+    "url": "src.e8af5a65.js",
+    "revision": "a008f7f07e5c6e3a16c5a2c83de3e055"
   },
   {
     "url": "start.7e6503d5.jpg",
     "revision": "efd476bbc6a68b6205dc02a85d9d5797"
   },
   {
-    "url": "style.9e78b64c.css",
-    "revision": "684bdec6b8740432407656554d42db30"
+    "url": "style.93ccadac.css",
+    "revision": "56fd51887165825afc37fb5aa3873d56"
   },
   {
     "url": "win_case.b80b6976.jpg",
